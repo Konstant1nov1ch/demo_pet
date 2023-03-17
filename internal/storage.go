@@ -5,8 +5,9 @@ import (
 )
 
 type Storage interface {
-	CreateTask(ctx context.Context, task ToDoList) (string, error)
-	FindOne(ctx context.Context, id string) (ToDoList, error)
-	UpdateTask(ctx context.Context, task CreateListDTO) error
+	Create(ctx context.Context, task Task) (string, error)
+	FindOne(ctx context.Context, id string) (Task, error)
+	FindAll(ctx context.Context) (t []Task, err error)
+	UpdateTask(ctx context.Context, task Task) error
 	DeleteTask(ctx context.Context, id string) error
 }

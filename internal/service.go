@@ -10,6 +10,6 @@ type service struct {
 	logger  *logging.Logger
 }
 
-func (s *service) Create(ctx context.Context, dto CreateListDTO) (task ToDoList, err error) {
+func (s *service) Create(ctx context.Context, dto CreateListDTO) (task Task, err error) {
 	return task, nil
 }
