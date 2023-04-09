@@ -39,27 +39,27 @@ func (h *handler) GetList(w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
-func (h *handler) CreateTask(w http.ResponseWriter, r *http.Request, param httprouter.Params) error {
+func (h *handler) CreateTask(w http.ResponseWriter, r *http.Request) error {
 	w.WriteHeader(201)
 	w.Write([]byte("this is list of task"))
 	return nil
 }
-func (h *handler) GetTaskByUUID(w http.ResponseWriter, r *http.Request, param httprouter.Params) error {
+func (h *handler) GetTaskByUUID(w http.ResponseWriter, r *http.Request) error {
 	w.WriteHeader(200)
 	w.Write([]byte("this is list by id"))
 	return nil
 }
-func (h *handler) UpdateTask(w http.ResponseWriter, r *http.Request, param httprouter.Params) error {
+func (h *handler) UpdateTask(w http.ResponseWriter, r *http.Request) error {
 	w.WriteHeader(204)
 	w.Write([]byte("this is list of task"))
 	return nil
 }
-func (h *handler) PartiallyUpdateTask(w http.ResponseWriter, r *http.Request, param httprouter.Params) error {
+func (h *handler) PartiallyUpdateTask(w http.ResponseWriter, r *http.Request) error {
 	w.WriteHeader(204)
 	w.Write([]byte("this is list of task"))
 	return nil
 }
-func (h *handler) DeleteTask(w http.ResponseWriter, r *http.Request, param httprouter.Params) error {
+func (h *handler) DeleteTask(w http.ResponseWriter, r *http.Request) error {
 	w.WriteHeader(204)
 	w.Write([]byte("this is list of task"))
 	return nil
