@@ -2,6 +2,7 @@ package db
 
 import (
 	"app/internal"
+	"app/internal/apperror"
 	"app/pkg/logging"
 	"context"
 	"errors"
@@ -55,8 +56,7 @@ func (d *db) FindOne(ctx context.Context, id string) (t internal.Task, err error
 	result := d.collection.FindOne(ctx, filter)
 	if result.Err() != nil {
 		if errors.Is(result.Err(), mongo.ErrNoDocuments) {
-			// TODO ErrEntityNotFound
-			return t, fmt.Errorf("not found")
+			return t, apperror.ErrNotFound
 		}
 		return t, fmt.Errorf("failed to find one task by id: %s due to error: %v", id, err)
 	}
@@ -97,8 +97,7 @@ func (d *db) UpdateTask(ctx context.Context, task internal.Task) error {
 	}
 
 	if result.MatchedCount == 0 {
-		// TODO ErrEntityNotFound
-		return fmt.Errorf("not found")
+		return apperror.ErrNotFound
 	}
 
 	d.logger.Tracef("Matched %d documents and Modified %d documents", result.MatchedCount, result.ModifiedCount)
@@ -120,8 +119,7 @@ func (d *db) DeleteTask(ctx context.Context, id string) error {
 		return fmt.Errorf("failed to execute query. error: %v", err)
 	}
 	if result.DeletedCount == 0 {
-		// TODO ErrEntityNotFound
-		return fmt.Errorf("not found")
+		return apperror.ErrNotFound
 	}
 	d.logger.Tracef("Deleted %d documents", result.DeletedCount)
 
