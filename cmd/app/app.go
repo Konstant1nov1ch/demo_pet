@@ -3,10 +3,7 @@ package main
 import (
 	"app/internal"
 	"app/internal/config"
-	"app/internal/db"
 	"app/pkg/logging"
-	"app/pkg/mongodb"
-	"context"
 	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"net"
@@ -23,61 +20,15 @@ func main() {
 	router := httprouter.New()
 
 	cfg := config.GetConfig()
-	cfgMongo := cfg.MongoDB
-	mongoDBClient, err := mongodb.NewClient(context.Background(), cfgMongo.Host, cfgMongo.Port, cfgMongo.Username, cfgMongo.Password,
-		cfgMongo.Database, cfgMongo.AuthDB)
-	if err != nil {
-		panic(err)
-	}
 
-	storage := db.NewStorage(mongoDBClient, cfg.MongoDB.Collection, logger)
-
-	task1 := internal.Task{
-		ID:       "",
-		Task:     "Write code",
-		Deadline: "ever",
-		Status:   true,
-	}
-
-	task1Id, err := storage.Create(context.Background(), task1)
-	logger.Info(task1Id)
-
-	if err != nil {
-		panic(err)
-	}
-	task2 := internal.Task{
-		ID:       "",
-		Task:     "готовьdddd",
-		Deadline: "скоро",
-		Status:   true,
-	}
-
-	task2Id, err := storage.Create(context.Background(), task2)
-	if err != nil {
-		panic(err)
-	}
-	logger.Info(task2Id)
-	userFound, err := storage.FindOne(context.Background(), task2Id)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(userFound)
-
-	userFound.Status = false
-
-	err = storage.UpdateTask(context.Background(), userFound)
-	if err != nil {
-		panic(err)
-	}
-
-	err = storage.DeleteTask(context.Background(), task2Id)
-	if err != nil {
-		panic(err)
-	}
-	_, err = storage.FindOne(context.Background(), task2Id)
-	if err != nil {
-		panic(err)
-	}
+	//cfgMongo := cfg.MongoDB
+	//mongoDBClient, err := mongodb.NewClient(context.Background(), cfgMongo.Host, cfgMongo.Port, cfgMongo.Username, cfgMongo.Password,
+	//	cfgMongo.Database, cfgMongo.AuthDB)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//
+	//storage := db.NewStorage(mongoDBClient, cfg.MongoDB.Collection, logger)
 
 	logger.Info("register author handler")
 	handler := internal.NewHandler(logger)
